@@ -3,7 +3,7 @@
 import * as net from 'net';
 
 
-import {RegMsg} from './ReqMsg';
+import {ReqMsg} from './ReqMsg';
 import {HttpClientMsg}from './HttpClientMsg';
 const res = "HTTP/1.1 200 OK\r\n"+
 "Content-Type: text/html\r\n"+
@@ -28,22 +28,14 @@ const server = net.createServer(function(socket) {
 
     socket.on('data', function(chunk) {
 
-        
-        let regMsg = new RegMsg(chunk.toString());
+        let reqMsg = new ReqMsg(chunk.toString());
 
-        regMsg.printMsg();
-        const data = chunk.toString();
-        
-        //console.log(data);
+        reqMsg.printMsg();
+       
+         let httpClientMsg = new HttpClientMsg(reqMsg.splitGetUrl(), reqMsg.splitGetMethod(), reqMsg.splitGetHttpVersion());
 
-    
+        console.log(httpClientMsg);
 
-        let httpClientMsg = new HttpClientMsg(regMsg.splitGetUrl(), regMsg.splitGetMethod(), regMsg.splitGetHttpVersion())
-        console.log(httpClientMsg.url);
-
-        const methodAndResource =data.substring(0,data.indexOf("HTTP")).split(" ") ;
-        const method = methodAndResource[0];
-        const resource = methodAndResource[1];
         const welcome = " welcome";
         let path = "";
         let param ="";
@@ -72,39 +64,33 @@ const server = net.createServer(function(socket) {
         else {
             path = resource;
         }
-        
-
-
-
-        
-        if(method === 'GET'){
-            switch(path){
+        */
+        if(httpClientMsg.msgMethod === 'GET'){
+            switch(httpClientMsg.url){
                 case "/":
                     socket.write(res);
-                    console.log(path);
                     break;  
                 
-                case "/Profile":
+                /*case "/Profile":
                     socket.write("HTTP/1.1 200 OK\r\n"+
                     "Content-Type: text/html\r\n"+
                     "Content-Length: "+contentLength+"\r\n"+
                     "\r\n"
                     +paramObj.key+ welcome);
                     break;
+                    */
 
-                case "/calculator":
-                    socket.write(res);
-                    break;
                 default :
                     socket.write(err);
                     break;
 
             }
         }
+        /*
         if(method == 'POST'){
             switch(path){
                 case "/calculator":
-
+                socket.write(res);
             }
         }
         
@@ -112,13 +98,14 @@ const server = net.createServer(function(socket) {
    
         console.log(methodAndResource);
         
-   */     
+*/ 
     });
-  
+
      
     socket.on('end', function() {
         console.log('클라이언트 접속 종료');
     });
+
     
 });
 
