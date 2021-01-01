@@ -65,35 +65,8 @@ const server = net.createServer(function(socket) {
             path = resource;
         }
         */
-        if(httpClientMsg.msgMethod === 'GET'){
-            switch(httpClientMsg.url){
-                case "/":
-                    socket.write(res);
-                    break;  
-                
-                /*case "/Profile":
-                    socket.write("HTTP/1.1 200 OK\r\n"+
-                    "Content-Type: text/html\r\n"+
-                    "Content-Length: "+contentLength+"\r\n"+
-                    "\r\n"
-                    +paramObj.key+ welcome);
-                    break;
-                    */
-
-                default :
-                    socket.write(err);
-                    break;
-
-            }
-        }
-        /*
-        if(method == 'POST'){
-            switch(path){
-                case "/calculator":
-                socket.write(res);
-            }
-        }
         
+       /*  
         console.log(data);
    
         console.log(methodAndResource);
