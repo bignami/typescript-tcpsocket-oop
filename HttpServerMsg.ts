@@ -10,7 +10,7 @@ class HttpServerMsg {
       this._httpVersion =  httpVersions;
       this._stateCode = stateCodes;
       this._contentType = contentTypes;
-      this._contentLenght = contentLeghts;
+      this._contentLenght = bodys.length;
       this._body = bodys;
     }
 
@@ -33,12 +33,17 @@ class HttpServerMsg {
     get body() {
         return this._body;
     }
-
-    resMessage() {
+    set contentLenght( contentLeght: number){
+       contentLeght = this.body.length
+       this.contentLenght = contentLeght
+    }
+    responceMessage() {
        return this._httpVersion + this._stateCode +"\r\n"+
        "Content-type: " + this._contentType + "\r\n" +
        "Conetent-Length: " + this._contentLenght +"\r\n" +
        "\r\n"
-       +this._body;
+       +this._body +"";
     }
 }
+
+export {HttpServerMsg};

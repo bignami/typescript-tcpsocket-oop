@@ -1,55 +1,40 @@
 
-import {HttopResponceHandler} from './HttpResponceHandler';
-
+import {HttpResponceHandler} from './HttpResponceHandler';
+import {HttpServerMsg} from './HttpServerMsg';
+import {HttpClientMsg} from './HttpClientMsg'
+import * as net from 'net';
 
 class  HttpRequsetHandler {
     
     
-
     constructor() {    
 
     }
 
-    static methodGetPathParsing(url : string){
-
-        if(url.indexOf('?')){
-
+    
+    static GetrequestBuild(url: any , socket: net.Socket){
+       
+        switch(url){
+            case "/":
+                HttpResponceHandler.httpMainResponce(socket);
+                break;  
+            
+            case "/Profile":
+                HttpResponceHandler.httpProfileresponce(socket,"denam");
+                break;
+                
+            /*
+            default :
+                socket.write(err);
+                break;
+            */
         }
 
-        return HttopResponceHandler.httpResponce()
-
-        
-
-
-
+ 
     }
-
-
-
-        /*
-            switch(url){
-                case "/":
-                    return socket.write(res);
-                    break;  
-                
-                case "/Profile":
-                    socket.write("HTTP/1.1 200 OK\r\n"+
-                    "Content-Type: text/html\r\n"+
-                    "\r\n");
-                    break;
-                    
-        
-                default :
-                    socket.write(err);
-                    break;
-        
-            }
-        }*/
-   
-    
-    
 }
 
+export {HttpRequsetHandler};
 
 /*
 if(method == 'POST'){
@@ -79,4 +64,3 @@ else {
 }
 */
 
-export {HttpRequsetHandler}

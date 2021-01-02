@@ -5,6 +5,7 @@ import * as net from 'net';
 import {HttpRequsetHandler} from './HttpRequsetHandler'
 import {RequestData} from './RequestData';
 import {HttpClientMsg}from './HttpClientMsg';
+
 const res = "HTTP/1.1 200 OK\r\n"+
 "Content-Type: text/html\r\n"+
 "Content-Length: 11\r\n"+
@@ -32,20 +33,13 @@ const server = net.createServer(function(socket) {
 
         requestData.printMsg();
        
-         let httpClientMsg = new HttpClientMsg(requestData.splitGetUrl(), requestData.splitGetMethod(), requestData.splitGetHttpVersion());
+         let httpClientMsg = new HttpClientMsg(requestData.splitGetUrl(), requestData.splitGetMethod(), requestData.splitGetHttpVersion(),requestData.splitGetEntityBody());
 
-        console.log(httpClientMsg);
+        console.log(httpClientMsg.query);
+        
+        HttpRequsetHandler.GetrequestBuild(httpClientMsg.url, socket);
 
-        const welcome = " welcome";
-        let path = "";
-        let param ="";
-        let key = "";
-        let value = "";
-        let entityBodyLeft = "";
-        let entityBodyRight="";
-        let paramObj = {};
-        let contentLength = 0;
-/*
+        /*
         if(resource.indexOf("?")>0){
             path = resource.substring(0,resource.indexOf("?"));
             param = resource.substring(resource.indexOf("?")+ 1);
@@ -58,9 +52,21 @@ const server = net.createServer(function(socket) {
             contentLength = paramObj.key.length + welcome.length;
         }else if(data.indexOf("&")>0) {
 
-            entityBodyLeft = data.substring(data.indexOf("a=1"),data.indexOf("&"));
-            console.log(entityBodyLeft,"엔터티 바디 왼쪽입니당.");
-        }
+            path = resource;
+
+            entityBodyLeft = data.substring(data.indexOf("a=1"), data.indexOf("&"));
+            entityBodyRight = data.substring(data.indexOf("&") + 1);
+
+            leftKey = entityBodyLeft.substring(0, entityBodyLeft.indexOf("="));
+            leftValue = entityBodyLeft.substring(entityBodyLeft.indexOf("=") + 1);
+            rightKey = entityBodyRight.substring(0, entityBodyRight.indexOf("="));
+            rightValue = entityBodyRight.substring(entityBodyRight.indexOf("=") + 1);
+
+            entityBobyLeftObj.leftKey = leftValue;
+            entityBobyRightObj.rightKey = rightValue;
+
+            muitlyBobyRes = entityBobyLeftObj.leftKey * entityBobyRightObj.rightKey;
+            contentLength = muitlyBobyRes.toString().length;
         else {
             path = resource;
         }
