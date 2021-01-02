@@ -2,8 +2,8 @@
 
 import * as net from 'net';
 
-
-import {ReqMsg} from './ReqMsg';
+import {HttpRequsetHandler} from './HttpRequsetHandler'
+import {RequestData} from './RequestData';
 import {HttpClientMsg}from './HttpClientMsg';
 const res = "HTTP/1.1 200 OK\r\n"+
 "Content-Type: text/html\r\n"+
@@ -28,11 +28,11 @@ const server = net.createServer(function(socket) {
 
     socket.on('data', function(chunk) {
 
-        let reqMsg = new ReqMsg(chunk.toString());
+        let requestData = new RequestData(chunk.toString());
 
-        reqMsg.printMsg();
+        requestData.printMsg();
        
-         let httpClientMsg = new HttpClientMsg(reqMsg.splitGetUrl(), reqMsg.splitGetMethod(), reqMsg.splitGetHttpVersion());
+         let httpClientMsg = new HttpClientMsg(requestData.splitGetUrl(), requestData.splitGetMethod(), requestData.splitGetHttpVersion());
 
         console.log(httpClientMsg);
 
@@ -72,6 +72,7 @@ const server = net.createServer(function(socket) {
         console.log(methodAndResource);
         
 */ 
+        
     });
 
      

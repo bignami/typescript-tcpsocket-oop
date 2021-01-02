@@ -1,4 +1,4 @@
-class ReqMsg { 
+class RequestData { 
 
     reqmsg : string; 
     constructor(regMsg : string){
@@ -19,4 +19,4 @@ class ReqMsg {
     }
 }
 
-export {ReqMsg};
+export {RequestData};
