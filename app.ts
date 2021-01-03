@@ -2,9 +2,9 @@
 
 import * as net from 'net';
 
-import {HttpRequsetHandler} from './HttpRequsetHandler'
-import {RequestData} from './RequestData';
-import {HttpClientMsg}from './HttpClientMsg';
+import {HttpRequsetHandler} from './src/HttpRequsetHandler'
+import {RequestData} from './src/RequestData';
+import {HttpClientMsg}from './src/HttpClientMsg';
 
 const server = net.createServer(function(socket) {
     
