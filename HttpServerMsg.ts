@@ -6,12 +6,12 @@ class HttpServerMsg {
     private _contentLenght: number;
     private _body : string;
 
-    constructor(httpVersions :string, stateCodes: string, contentTypes: string, contentLeghts: number, bodys: string  ){
+    constructor(httpVersions :string, stateCodes: string, contentTypes: string, bodys: string  ){
       this._httpVersion =  httpVersions;
       this._stateCode = stateCodes;
       this._contentType = contentTypes;
-      this._contentLenght = bodys.length;
       this._body = bodys;
+      this._contentLenght = this._body.length;
     }
 
     get httpVersion() {
@@ -33,16 +33,12 @@ class HttpServerMsg {
     get body() {
         return this._body;
     }
-    set contentLenght( contentLeght: number){
-       contentLeght = this.body.length
-       this.contentLenght = contentLeght
-    }
+
     responceMessage() {
-       return this._httpVersion + this._stateCode +"\r\n"+
-       "Content-type: " + this._contentType + "\r\n" +
-       "Conetent-Length: " + this._contentLenght +"\r\n" +
-       "\r\n"
-       +this._body +"";
+       return this._httpVersion +" "+this._stateCode +"\r\n"+
+       "Content-type:" +" "+ this._contentType + "\r\n" +
+       "Content-Length:"+" " + this._contentLenght +"\r\n" +
+       "\r\n"+this._body + "\r\n";
     }
 }
 
