@@ -1,5 +1,5 @@
 
-import {HttpServerMsg} from './HttpServerMsg';
+import {HttpServerMessage} from './HttpServerMessage';
 
 import * as net from 'net';
 class HttpResponceHandler {
@@ -11,21 +11,21 @@ class HttpResponceHandler {
     
     static httpMainResponce (socket: net.Socket){
 
-        let seccuseMain = new HttpServerMsg('HTTP/1.1','200 OK', 'text/html',"Helloworld");
+        let seccuseMain = new HttpServerMessage('HTTP/1.1','200 OK', 'text/html',"Helloworld");
         return socket.write(seccuseMain.responceMessage());
 
     }
-    static httpProfileresponce (socket: net.Socket, body: string){
+    static httpProfileResponce (socket: net.Socket, body: string){
         
-        let seccuseProfile = new HttpServerMsg('HTTP/1.1','200 OK', 'text/html', body);
+        let seccuseProfile = new HttpServerMessage('HTTP/1.1','200 OK', 'text/html', body);
         return socket.write(seccuseProfile.responceMessage());
 
     }
     
-    static httpCalculatorresponce (socket: net.Socket, body: string){
+    static httpCalculatorResponce (socket: net.Socket, body: number){
         
-        let seccuseProfile = new HttpServerMsg('HTTP/1.1','200 OK', 'text/html', body);
-        return socket.write(seccuseProfile.responceMessage());
+        let seccuseCalculator = new HttpServerMessage('HTTP/1.1','200 OK', 'text/html', body);
+        return socket.write(seccuseCalculator.responceMessage());
 
     }
 

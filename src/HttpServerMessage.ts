@@ -1,17 +1,22 @@
-class HttpServerMsg {
+
+
+class HttpServerMessage {
     
     private _httpVersion : string;
     private _stateCode : string;
     private _contentType: string;
-    private _contentLenght: number;
-    private _body : string;
+    private _contentLenght: number = 0 ;
+    private _body : string | number;
 
-    constructor(httpVersions :string, stateCodes: string, contentTypes: string, bodys: string  ){
+    constructor(httpVersions :string, stateCodes: string, contentTypes: string, bodys: string | number ){
       this._httpVersion =  httpVersions;
       this._stateCode = stateCodes;
       this._contentType = contentTypes;
       this._body = bodys;
-      this._contentLenght = this._body.length;
+      
+      if (typeof this._body === 'string') { this._contentLenght = this._body.length; }
+      else if (typeof this.body === 'number') { this._contentLenght = Math.ceil(Math.log10(this._body + 1)) }
+      else { }
     }
 
     get httpVersion() {
@@ -34,7 +39,7 @@ class HttpServerMsg {
         return this._body;
     }
 
-    responceMessage() {
+    public responceMessage() {
        return this._httpVersion +" "+this._stateCode +"\r\n"+
        "Content-type:" +" "+ this._contentType + "\r\n" +
        "Content-Length:"+" " + this._contentLenght +"\r\n" +
@@ -42,4 +47,4 @@ class HttpServerMsg {
     }
 }
 
-export {HttpServerMsg};
+export {HttpServerMessage};

@@ -2,25 +2,26 @@
 
 import * as net from 'net';
 
-import {HttpRequsetHandler} from './src/HttpRequsetHandler'
+import {HttpRequestHandler} from './src/HttpRequestHandler'
 import {RequestData} from './src/RequestData';
-import {HttpClientMsg}from './src/HttpClientMsg';
+import {HttpClientMessage}from './src/HttpClientMessage';
 
 const server = net.createServer(function(socket) {
     
     console.log('클라이언트 접속');
 
 
-    socket.on('data', function(chunk) {
+    socket.on('data', function(chunk ) {
 
         let requestData = new RequestData(chunk.toString());
-       
-        let httpClientMsg = new HttpClientMsg(requestData.splitGetUrl(), requestData.splitGetMethod(), requestData.splitGetHttpVersion(),requestData.splitGetEntityBody());
+        console.log(chunk.toString())
+        let httpClientMsg = new HttpClientMessage(requestData.splitGetUrl(), requestData.splitGetMethod(), requestData.splitGetHttpVersion(),requestData.splitGetEntityBody());
 
-        HttpRequsetHandler.getRequestBuild(httpClientMsg.msgMethod,httpClientMsg.url, socket, httpClientMsg.httpGetQueryValue());
+        HttpRequestHandler.getRequestBuild(httpClientMsg.msgMethod,httpClientMsg.url, socket, httpClientMsg.httpGetQueryValue());
 
-        HttpRequsetHandler.postRequestBuild(httpClientMsg.url, socket, httpClientMsg.httpGetEntityValue());
-    
+        HttpRequestHandler.postRequestBuild(httpClientMsg.msgMethod,httpClientMsg.url, socket, httpClientMsg.httpGetEntityValue());
+        
+
     });
      
     socket.on('end', function() {

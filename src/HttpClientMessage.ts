@@ -1,14 +1,14 @@
-class HttpClientMsg{
+
+
+
+class HttpClientMessage{
     private _url : string;
-    private _msgMethod : string;
+    private _requestMethod : string;
     private _httpVersion: string;
-    private _entityBody: Object = {};
-    private _query: Object = {};
+    private _entityBody: object = {};
+    private _query: object = {};
 
-
-
-
-    constructor(urls: string, methods: string, httpVersions: string, entityBody: Object) {
+    constructor(urls: string, methods: string, httpVersions: string, entityBody: string) {
         
         if (urls.indexOf("?")>0) {
             
@@ -25,15 +25,16 @@ class HttpClientMsg{
         
         if (entityBody.valueOf() !== "") {
 
-            this._entityBody = entityBody.toString().split("&").map(it => it.split("=")).reduce((acc: any , it ) => {
-                acc[it[0]] = Number(it[1]);
+            this._entityBody = entityBody.split("&").map(it => it.split("=")).reduce((acc: any , it ) => {
+                acc[it[0]] = it[1];
                 return acc;
             }, {});
+            
         } else {
-            this._entityBody = entityBody;
+            this._entityBody = {};
         }
         
-        this._msgMethod = methods;
+        this._requestMethod = methods;
         this._httpVersion = httpVersions;
      
     }
@@ -43,7 +44,7 @@ class HttpClientMsg{
     }
 
     get msgMethod() {
-        return this._msgMethod;
+        return this._requestMethod;
     }
 
     get httpVersion() {
@@ -58,22 +59,28 @@ class HttpClientMsg{
         return this._query;
     }
 
-    httpGetQueryValue() : string {
+    public httpGetQueryValue() : string {
 
-        return Object.values(this._query).toString();
+        let queryValue : string = "";
+        for(const [key, value] of Object.entries(this._query)) {    
+            
+            queryValue += value;
+
+        }
+        return queryValue;
         
     }
 
-    httpGetEntityValue() : string {
+   public httpGetEntityValue() : number {
        let addValue : number = 1;
         for(const [key, value] of Object.entries(this._entityBody)) {
             
             addValue *= value;
 
         }
-        return addValue.toString();
+        return addValue;
        
     }
 }
 
-export {HttpClientMsg};
+export {HttpClientMessage};

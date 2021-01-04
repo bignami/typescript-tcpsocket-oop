@@ -3,7 +3,7 @@ import {HttpResponceHandler} from './HttpResponceHandler';
 
 import * as net from 'net';
 
-class  HttpRequsetHandler {
+class  HttpRequestHandler {
     
     
     constructor() {    
@@ -11,7 +11,8 @@ class  HttpRequsetHandler {
     }
 
     static getRequestBuild(method: string ,url: string , socket: net.Socket, queryValue : string){
-       if(method === 'GET') {
+      
+        if(method === 'GET') {
             switch(url) {
 
                 case "/":
@@ -19,25 +20,27 @@ class  HttpRequsetHandler {
                     break;  
                 
                 case "/Profile":
-                    HttpResponceHandler.httpProfileresponce(socket,queryValue);
+                    HttpResponceHandler.httpProfileResponce(socket,queryValue);
                     break;
 
             }
        }
        
- 
     }
 
-    static postRequestBuild(url: string , socket: net.Socket, entityValue : string){
+    static postRequestBuild(method : string ,url: string , socket: net.Socket, entityValue : number){
        
-        switch(url) {
+        if(method == 'POST') {
+            switch(url) {
             
-            case "/calculator":
-                HttpResponceHandler.httpCalculatorresponce(socket,entityValue);
-                break;  
+                case "/calculator":
+                    HttpResponceHandler.httpCalculatorResponce(socket,entityValue);
+                    break;  
+            
+             }
+        }
         
-         }
     }
 }
 
-export {HttpRequsetHandler};
+export {HttpRequestHandler};

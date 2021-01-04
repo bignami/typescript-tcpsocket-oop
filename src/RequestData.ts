@@ -1,13 +1,10 @@
 class RequestData { 
 
-    reqmsg : string; 
+    public reqmsg : string; 
     constructor(regMsg : string){
         this.reqmsg = regMsg;
     }
 
-    printMsg(){
-        return console.log(this.reqmsg);
-    }
     splitGetMethod() : string{
         return this.reqmsg.substring(0,this.reqmsg.indexOf("/")).trim() ;
     }
