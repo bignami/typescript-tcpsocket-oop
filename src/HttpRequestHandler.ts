@@ -23,6 +23,10 @@ class  HttpRequestHandler {
                     HttpResponceHandler.httpProfileResponce(socket,queryValue);
                     break;
 
+                default :
+                    HttpResponceHandler.httpErrorResponce(socket);
+                    break; 
+
             }
        }
        
@@ -36,7 +40,10 @@ class  HttpRequestHandler {
                 case "/calculator":
                     HttpResponceHandler.httpCalculatorResponce(socket,entityValue);
                     break;  
-            
+                
+                default :
+                    HttpResponceHandler.httpErrorResponce(socket);
+                    break;     
              }
         }
         

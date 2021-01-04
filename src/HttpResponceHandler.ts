@@ -29,6 +29,11 @@ class HttpResponceHandler {
 
     }
 
+    static httpErrorResponce (socket: net.Socket) {
+        let error = new HttpServerMessage('HTTP/1.1','404 Not Found', 'text/html', "");
+        return socket.write(error.responceMessage());
+    }
+
 }
 
 
